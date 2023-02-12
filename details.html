@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;800&display=swap" rel="stylesheet">
+    <title>Countries|details </title>
+    <script src="https://use.fontawesome.com/a7305bf806.js"></script>
+</head>
+<body class="" style="font-size: 16px;">
+    <!-- ------------------header------------------- -->
+     <header role="heading">
+        <nav>
+            <div class="title">Where in the world?</div>
+            <div class="theme" id="theme" >
+                 <i class="fa fa-sun-o" id="icon"></i> <span><span id="mode">light</span>mode</span>
+            </div>
+        </nav>
+     </header>
+     <!-- ----------------------end---------------------- -->
+
+     <!-- ----------------------main content-------------- -->
+     <main role="main">
+           <div class="container">
+              <div class="top">
+                <div class="button" id="back">
+                    <a href="index.html">
+                    <i class="fa fa-long-arrow-left"></i><span>back</span>
+                    </a>
+                </div>
+              </div>
+              <div class="grid-box" id="gridBox">
+               
+              </div>
+           </div>
+     </main>
+    <!-- ---------------------------------end------------------- -->
+    <!-- ---------------footer--------------------------- -->
+    <footer role="contentinfo">
+        <div class="attribution">
+          Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+          Coded by <a href="#">Ssenyondo Micheal</a>.
+        </div>
+        </footer>
+        <!-- ------------------------------------end------------------ -->
+        <!-- ---------------------------js----------------- -->
+      
+        <script src="main.js"></script>
+        <!-- ------------------------------script-------------- -->
+      <script>
+     let newName =localStorage.getItem('name');
+     
+
+   function createDetails(countryName){
+    var countries;
+    var i,x;
+    fetch('data.json')
+        .then(response =>response.json())
+        .then(data =>{
+            countries=data;
+            for(x=0;x<countries.length;x++ ){
+                if(countries[x].name==countryName){
+                    i=x;
+                   
+                    break;
+                }
+                
+                
+            }
+        // ---------------content div-------------
+        let card1Content =document.createElement('div');
+        card1Content.classList.add('card-1');
+
+            // ------------imagebox div--------------
+        let div =document.createElement('div');
+        div.classList.add('image-box');
+
+        let cardimage=document.createElement('img');
+        cardimage.classList.add('image');
+
+        if(countries[i].flags) {
+          cardimage.setAttribute('src',countries[i].flags.png);
+        }
+
+        div.insertAdjacentElement('afterbegin',cardimage);
+        // ----------addimage--------------
+        card1Content.insertAdjacentElement('afterbegin',div);
+        // ---------------countryinfo----------------
+        let countInfo =document.createElement('div');
+        countInfo.classList.add('country-info');
+        // -----------------name-------------
+        let cardName =document.createElement('h1');
+        cardName.classList.add('title');
+
+        if(countries[i].name) {
+          cardName.innerHTML=countries[i].name;
+        }
+
+        countInfo.insertAdjacentElement('afterbegin',cardName);
+        // ----------------borderinfo------------
+        let borderInfo =document.createElement('div');
+        borderInfo.classList.add('border-info');
+
+        // --------------p--------------
+        var cardp =document.createElement('p');
+        cardp.classList.add('nativeName');
+
+        if(countries[i].nativeName) {
+           cardp.innerHTML ='Native name: <span >'+ countries[i].nativeName +'</span>';
+        }else{
+                  cardp.innerHTML='Native name: <span > none </span>';
+        }
+
+        borderInfo.insertAdjacentElement('afterbegin',cardp);
+        // --------------------------p----------------
+        var cardp =document.createElement('p');
+        cardp.classList.add('population');
+
+        if(countries[i].population) {
+          cardp.innerHTML ='Population: <span>'+ countries[i].population +'</span>';
+        }else{
+                  cardp.innerHTML='Population: <span> none </span>';
+                }
+
+        borderInfo.insertAdjacentElement('beforeend',cardp);
+
+        // --------------p--------------
+
+        var cardp =document.createElement('p');
+        cardp.classList.add('region');
+
+        if(countries[i].region) {
+          cardp.innerHTML ='Region: <span id="region">'+countries[i].region+'</span>';
+        }else{
+                  cardp.innerHTML='Region: <span id="region">none</span>';
+                }
+
+        borderInfo.insertAdjacentElement('beforeend',cardp);
+        // ----------------------------p----------------
+        var cardp =document.createElement('p');
+        cardp.classList.add('subregion');
+
+        if(countries[i].subregion) {
+          cardp.innerHTML ='Sub Region: <span>'+countries[i].subregion+'</span>';
+        }else{
+                  cardp.innerHTML='Sub Region: <span> none </span>';
+                }
+
+        borderInfo.insertAdjacentElement('beforeend',cardp);
+
+        // --------------p--------------
+        
+        var cardp =document.createElement('p');
+        cardp.classList.add('capital');
+
+        if(countries[i].capital) {
+          cardp.innerHTML ='Capital: <span id="capital">'+ countries[i].capital +'</span>';
+        }else{
+                  cardp.innerHTML='Capital: <span id="capital">none</span>';
+                }
+
+        borderInfo.insertAdjacentElement('beforeend',cardp);
+
+        // ------------------adding borderInfo---------------
+        countInfo.insertAdjacentElement('beforeend',borderInfo);
+
+        // -----------------innerinfo-------------------
+        let innerInfo =document.createElement('div');
+        innerInfo.classList.add('inner-info');
+
+        // --------------p--------------
+        var cardp =document.createElement('p');
+        cardp.classList.add('topLevelDomain');
+
+        if(countries[i].topLevelDomain) {
+           cardp.innerHTML ='Top Level Domain: <span >'+ countries[i].topLevelDomain +'</span>';
+          }else{
+                  cardp.innerHTML='Top Level Domain: <span >none</span>';
+                }
+        
+        innerInfo.insertAdjacentElement('afterbegin',cardp);
+        // --------------------------p----------------
+        var cardp =document.createElement('p');
+        cardp.classList.add('currencies');
+
+        if(countries[i].currencies) {
+          cardp.innerHTML ='Currencies: <span>'+ countries[i].currencies[0].name +'</span>';
+        }else{
+                  cardp.innerHTML='Currencies: <span> none</span>';
+                }
+
+        innerInfo.insertAdjacentElement('beforeend',cardp);
+
+        // --------------p--------------
+
+        var cardp =document.createElement('p');
+        cardp.classList.add('languages');
+        if(+countries[i].languages) {
+            cardp.innerHTML ='Languages: <span id="region">'+countries[i].languages[0].name+', '+countries[i].languages[0].nativeName+'</span>';
+          }else{
+                  cardp.innerHTML='Languages: <span id="region"> none </span>';
+                }
+        innerInfo.insertAdjacentElement('beforeend',cardp);
+
+        // ----------------add innerInfo----------------
+        countInfo.insertAdjacentElement('beforeend',innerInfo);
+        // ---------------------borders--------------
+        let borders =document.createElement('div');
+        borders.classList.add('borders');
+        // --------------p--------------
+        var cardp =document.createElement('p');
+        cardp.innerHTML='Border Countries:';
+        //-----------------adding p----------------
+        borders.insertAdjacentElement('beforeend',cardp);
+        // -------------------------button---------------
+        if(countries[i].borders){
+          countries[i].borders.forEach(element => {
+              var name='';
+              for(var x=0; x<countries.length;x++){
+                  if(countries[x].alpha3Code ==element){
+                  name=countries[x].name;
+                  }
+              }
+              let button =document.createElement('div');
+              button.classList.add('btn');
+              button.id=name;
+              button.setAttribute('onClick',"goTo(this.id)")
+              button.innerHTML=name;
+              borders.insertAdjacentElement('beforeend',button);
+          });
+        }else{
+          let button =document.createElement('div');
+              
+              button.innerHTML= 'none';
+              borders.insertAdjacentElement('beforeend',button);
+         }
+        //  ----------------add borders---------------
+        countInfo.insertAdjacentElement('beforeend',borders);
+        // ----------------add countInfo---------------
+        card1Content.insertAdjacentElement('beforeend',countInfo);
+
+        let grid =document.getElementById('gridBox')
+        grid.appendChild(card1Content);
+
+    });
+}  
+
+
+createDetails(newName);
+      </script>
+</body>
+</html>

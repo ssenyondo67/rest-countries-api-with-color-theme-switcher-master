@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;800&display=swap" rel="stylesheet">
+    <title>Countries </title>
+    <script src="https://use.fontawesome.com/a7305bf806.js"></script>
+</head>
+<body class="">
+    <!-- ------------------header------------------- -->
+     <header role="heading">
+        <nav>
+            <div class="title">Where in the world?</div>
+            <div class="theme" id="theme">
+                 <i class="fa fa-sun-o" id="icon"></i> <span><span id="mode">light</span> mode</span>
+            </div>
+        </nav>
+     </header>
+     <!-- ----------------------end---------------------- -->
+
+     <!-- ----------------------main content-------------- -->
+     <main role="main">
+           <div class="container">
+              <div class="top">
+                <div class="input-group">
+                    <i class="fa fa-search"></i>
+                    <input type="text" placeholder="Search for country---" id="search">
+                </div>
+                <div class="input-group " id="filter">
+                    <select id="select" name="filter"  >
+                        <option >Filter by</option>
+                        <option value="Africa" >Africa</option>
+                        <option value="Asia">Asia</option>
+                        <option value="America">America</option>
+                        <option value="Europe">Europe</option>
+                      </select>
+                </div>
+              </div>
+              <div class="grid" id="grid">
+                 <div class="error" id="error">
+                    <strong>Ooops No country <em> much your input</em></strong>
+                 </div>
+              </div>
+
+           </div>
+     </main>
+    <!-- ---------------------------------end------------------- -->
+    <!-- ---------------footer--------------------------- -->
+    <footer role="contentinfo">
+        <div class="attribution">
+          Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+          Coded by <a href="#">Ssenyondo Micheal</a>.
+        </div>
+        </footer>
+        <!-- ------------------------------------end------------------ -->
+        <!-- ---------------------------js theme----------------- -->
+      
+        <script src="main.js"></script>
+
+        <script>
+  
+function createCard(){
+     var countries;
+    fetch('data.json')
+        .then(response =>response.json())
+        .then(data =>{
+             countries=data;
+            for(var i=0;i<countries.length;i++){
+
+                // -----------a-------------
+
+              let cardItem =document.createElement('a');
+              cardItem.classList.add('card');
+
+              if(countries[i].name) {
+                cardItem.id=countries[i].name;
+              }
+
+              cardItem.setAttribute('src','details.html')
+              cardItem.setAttribute('onClick',"goTo(this.id)")
+              // ---------------image adding it-------------
+              let cardimage=document.createElement('img');
+              cardimage.classList.add('image');
+
+              if(countries[i].flags) {
+                 cardimage.setAttribute('src',countries[i].flags.png);
+
+                }
+              cardItem.insertAdjacentElement('afterbegin',cardimage);
+
+              // ---------------content div-------------
+              let cardContent =document.createElement('div');
+              cardContent.classList.add('content');
+
+              // --------name------------
+              let cardName =document.createElement('h1');
+              cardName.classList.add('name');
+
+              if(countries[i].name){
+              cardName.innerHTML=countries[i].name;
+              }
+
+             cardContent.insertAdjacentElement('afterbegin',cardName);
+
+              // -------------info div ----------------
+              let cardInfo =document.createElement('div');
+              cardInfo.classList.add('info');
+
+              // --------------p--------------
+
+              var cardp =document.createElement('p');
+              cardp.classList.add('population');
+
+              if(countries[i].population) {
+                  cardp.innerHTML ='Population: <span id="population">'+ countries[i].population +'</span>';
+                }else{
+                  cardp.innerHTML='Population: <span id="population"> none </span>';
+                }
+
+              cardInfo.insertAdjacentElement('afterbegin',cardp);
+
+              // --------------p--------------
+
+              var cardp =document.createElement('p');
+              cardp.classList.add('region');
+
+              if(countries[i].region) {
+                 cardp.innerHTML ='Region: <span id="region">'+countries[i].region+'</span>';
+                }else{
+                  cardp.innerHTML='Region: <span id="region"> none</span>'
+                }
+              cardInfo.insertAdjacentElement('beforeend',cardp);
+
+              // --------------p--------------
+              var tom='tom';
+              var cardp =document.createElement('p');
+              cardp.classList.add('capital');
+
+              if(countries[i].capital) {
+                 cardp.innerHTML ='Capital: <span id="capital">'+ countries[i].capital +'</span>';
+                }else{
+                  cardp.innerHTML='Capital: <span id="capital"> none </span>';
+                }
+              cardInfo.insertAdjacentElement('beforeend',cardp);
+
+              cardContent.insertAdjacentElement('beforeend',cardInfo);
+              cardItem.insertAdjacentElement('beforeend',cardContent);
+
+              
+
+              let grid =document.getElementById('grid');
+              grid.appendChild(cardItem);
+                    
+            }
+        
+    });    
+
+}
+
+
+createCard()
+
+
+let search =document.getElementById('search')
+search.addEventListener('keyup',e=>{
+    let value =e.target.value;
+    if(value){
+        for (let i = 0; i < countryNames.length; i++) {
+            if(! countryNames[i].toLowerCase().includes(value.toLowerCase()) && ! region[i].toLowerCase().includes(value.toLowerCase()) && ! subregion[i].toLowerCase().includes(value.toLowerCase())){
+                let card=document.getElementById(countryNames[i])
+                card.classList.add('hide');
+               
+            }
+            
+        }
+        let cards =document.getElementsByClassName('card');
+        var hiden =0;
+        for (let i = 0; i < cards.length; i++) {
+            if(cards[i].classList.contains('hide')){
+                hiden +=1;
+                
+                if(hiden==cards.length){
+                    let error1 =document.getElementById('error');
+                    error1.style.display='block';
+                    
+                }
+            }
+        }
+    }else{
+        for (let i = 0; i < countryNames.length; i++) {
+            
+            let card=document.getElementById(countryNames[i])
+            card.classList.remove('hide');
+           let error1 =document.getElementById('error');
+           error1.style.display='none';  
+            
+        }
+    }
+               
+    
+});
+
+
+let select = document.getElementById('select');
+
+select.addEventListener('click',e=>{
+    var value=e.target.value;
+    for (let i = 0; i < countryNames.length; i++) {
+            
+            let card=document.getElementById(countryNames[i])
+            card.classList.remove('hide');
+          
+        }
+    
+    if( value !='Filter by'){
+        for (let i = 0; i < countryNames.length; i++) {
+            if(! region[i].toLowerCase().includes(value.toLowerCase())){
+                let card=document.getElementById(countryNames[i])
+                card.classList.add('hide');
+               
+            }
+            
+        }
+        
+    }
+
+
+  });
+
+        </script>
+
+</body>
+</html>
