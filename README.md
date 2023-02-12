@@ -23,8 +23,8 @@ This is a solution to the [QR code component challenge on Frontend Mentor](https
 
 ### Links
 
-- Solution URL:https://github.com/ssenyondo67/product-preview-card
-- Live Site URL: https://product-preview-card-two-ochre.vercel.app/
+- Solution URL:https://github.com/ssenyondo67/rest-countries-api-with-color-theme-switcher-master
+- Live Site URL: https://rest-countries-api-with-color-theme-switcher-master-seven.vercel.app/
 
 ## My process
 
